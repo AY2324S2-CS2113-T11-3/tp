@@ -35,11 +35,12 @@ public class Parser {
     private static final String REMOVE_FLOWER_PREFIX = "/from";
 
     // regex
-    private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/to(.+)";
+    private static final String ADD_FLOWER_REGEX = "(.+)/q(\\s*)(-?\\d+)(\\s*)/to(.+)";
 
-    private static final String ADD_FLOWER_AND_COLOUR_REGEX = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(\\d+)(\\s*)/to(.+)";
-    private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(\\d+)(\\s*)/from(.+)";
-    private static final String REMOVE_FLOWER_AND_COLOUR_REGEX = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(\\d+)(\\s*)/from(.+)";
+    private static final String ADD_FLOWER_AND_COLOUR_REGEX = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(-?\\d+)(\\s*)/to(.+)";
+    private static final String REMOVE_FLOWER_REGEX = "(.+)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
+    private static final String REMOVE_FLOWER_AND_COLOUR_REGEX
+            = "(.+)/c(\\s*)(.+)(\\s*)/q(\\s*)(-?\\d+)(\\s*)/from(.+)";
     private static final String PARSE_OCCASION_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String PARSE_COLOUR_REGEX = "^\\s*[A-Za-z]+(?:\\s+[A-Za-z]+)?\\s*$";
     private static final String SAVE_BOUQUET_REGEX = "^\\s*(yes|no)\\s*$";
@@ -131,20 +132,22 @@ public class Parser {
             case ("add"):
                 String[] arguments = new String[2];
                 String trimmedArgument = processedInput.substring(firstWhitespace).trim();
-                int firstSlashPos = trimmedArgument.indexOf("/");
-                if (firstSlashPos < 0 && outputs[0].equals("remove")) {
+
+                int firstSlash = trimmedArgument.indexOf("/");
+                if (firstSlash < 0 && outputs[0].equals("remove")) {
                     throw new FlorizzException("Incorrect usage of remove." +
                             " Correct format: remove <flowerName> " +
                             "/c <flowerColour> (optional) " +
                             "/q <quantity> /from <bouquetName>");
-                } else if (firstSlashPos < 0) { // add
+                } else if (firstSlash < 0) { // add
+
                     throw new FlorizzException("Incorrect usage of add." +
                             " Correct format: add <flowerName> " +
                             "/c <flowerColour> (optional) " +
                             "/q <quantity> /to <bouquetName>");
                 }
-                arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,firstSlashPos).trim());
-                arguments[1] = trimmedArgument.substring(firstSlashPos).trim();
+                arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,firstSlash).trim());
+                arguments[1] = trimmedArgument.substring(firstSlash).trim();
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
             default:
@@ -243,11 +246,14 @@ public class Parser {
         int quantity;
         try {
             quantity = Integer.parseInt(quantityString);
-        }catch(NumberFormatException error){
+        } catch (NumberFormatException error) {
             throw new FlorizzException("Invalid number inputted, please enter a sensible number next time!");
         }
+        if (quantity < 0) {
+            throw new FlorizzException("Flowers are physical objects which cannot be negative!");
+        }
         String bouquetName = removePrefix(argument.substring(prefixIndex), ADD_FLOWER_PREFIX).trim();
-        if (includeColour){
+        if (includeColour) {
             int colourIndex = argument.indexOf(COLOUR);
             try{
                 flowerName = argument.substring(0,colourIndex).trim();
@@ -293,8 +299,11 @@ public class Parser {
         int quantity;
         try {
             quantity = Integer.parseInt(quantityString);
-        }catch(NumberFormatException error){
+        } catch(NumberFormatException error) {
             throw new FlorizzException("Invalid number inputted, please enter a sensible number next time!");
+        }
+        if (quantity < 0) {
+            throw new FlorizzException("Flowers are physical objects which cannot be negative!");
         }
         String bouquetName = removePrefix(argument.substring(prefixIndex), REMOVE_FLOWER_PREFIX).trim();
         if (includeColour){
@@ -329,14 +338,14 @@ public class Parser {
      * @param argument The user input to be parsed.
      * @return The parsed occasion.
      */
-    public static boolean parseOccasion(String argument) {
+    public static boolean parseOccasion(String argument) throws FlorizzException {
         if (argument == null) {
             System.out.println("No argument detected! " +
                     "Please input an occasion");
             return false;
         }
-
-        if (!argument.matches(PARSE_OCCASION_REGEX)) {
+        String detectedOccasion = FuzzyLogic.detectItem(argument);
+        if (detectedOccasion.isEmpty()) {
             System.out.println("Incorrect format detected! " +
                     "Please input a single occasion");
             return false;

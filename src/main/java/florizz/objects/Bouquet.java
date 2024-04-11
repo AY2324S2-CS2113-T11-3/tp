@@ -67,10 +67,13 @@ public class Bouquet {
      * @param flowerName
      * @param quantity
      */
-    public void addFlower(Flower flowerName, Integer quantity) {
+    public void addFlower(Flower flowerName, Integer quantity) throws FlorizzException {
         if (doesFlowerExist(flowerName)) {
             Integer currentQuantity = getFlowerQuantity(flowerName);
-            Integer newQuantity = currentQuantity + quantity;
+            int newQuantity = currentQuantity + quantity;
+            if ((quantity > 0 && currentQuantity > Integer.MAX_VALUE - quantity) || newQuantity < 0) {
+                throw new FlorizzException("You have added too much flowers!");
+            }
             flowerHashMap.replace(flowerName, newQuantity);
         } else {
             flowerHashMap.put(flowerName,quantity);

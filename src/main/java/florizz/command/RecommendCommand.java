@@ -77,7 +77,8 @@ public class RecommendCommand extends Command{
      * @param eligibleFlowers list of flowers to choose from
      * @param recommendedBouquet bouquet to add flowers to
      */
-    private void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet) {
+    private void addRandomFlowers(ArrayList<Flower> eligibleFlowers, Bouquet recommendedBouquet)
+            throws FlorizzException {
         logger.entering(RecommendCommand.class.getName(), "addRandomFlowers");
         // [TEMPORARY CODE]
         // generate random combination of flowers from eligible flowers totaling to 5

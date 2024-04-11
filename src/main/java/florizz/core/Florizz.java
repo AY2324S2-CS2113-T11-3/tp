@@ -29,7 +29,6 @@ public class Florizz {
         boolean isRunning = true;
         Ui ui = new Ui();
         ui.printIntroMessage();
-        assert tempBouquetList !=null : "tempBouquetList doesn't exist";
 
         // Set up logger
 
@@ -61,7 +60,7 @@ public class Florizz {
                 Command command = Parser.parse(input.trim(), true);
                 isRunning = command.execute(tempBouquetList, ui);
                 storage.trySaveAllBouquets(tempBouquetList);
-            } catch(FlorizzException error){
+            } catch (FlorizzException error) {
                 ui.printError(error);
             }
         }
