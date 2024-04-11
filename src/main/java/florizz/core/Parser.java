@@ -131,20 +131,20 @@ public class Parser {
             case ("add"):
                 String[] arguments = new String[2];
                 String trimmedArgument = processedInput.substring(firstWhitespace).trim();
-                int secondWhitespace = trimmedArgument.indexOf(" ");
-                if (secondWhitespace < 0 && outputs[0].equals("remove")) {
+                int firstSlashPos = trimmedArgument.indexOf("/");
+                if (firstSlashPos < 0 && outputs[0].equals("remove")) {
                     throw new FlorizzException("Incorrect usage of remove." +
                             " Correct format: remove <flowerName> " +
                             "/c <flowerColour> (optional) " +
                             "/q <quantity> /from <bouquetName>");
-                } else if (secondWhitespace < 0) { // add
+                } else if (firstSlashPos < 0) { // add
                     throw new FlorizzException("Incorrect usage of add." +
                             " Correct format: add <flowerName> " +
                             "/c <flowerColour> (optional) " +
                             "/q <quantity> /to <bouquetName>");
                 }
-                arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,secondWhitespace).trim());
-                arguments[1] = trimmedArgument.substring(secondWhitespace).trim();
+                arguments[0] = FuzzyLogic.detectItem(trimmedArgument.substring(0,firstSlashPos).trim());
+                arguments[1] = trimmedArgument.substring(firstSlashPos).trim();
                 outputs[1] = arguments[0] + " " + arguments[1];
                 break;
             default:
