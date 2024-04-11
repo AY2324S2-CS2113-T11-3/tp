@@ -5,6 +5,7 @@ import florizz.objects.Flower;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Ui {
@@ -41,7 +42,11 @@ public class Ui {
      * @return Returns the user input as one String.
      */
     public String getInput(){
-        return inputScanner.nextLine();
+        try{
+            return inputScanner.nextLine();
+        } catch(NoSuchElementException error){
+            return "bye";
+        }
     }
 
     /**
@@ -153,10 +158,10 @@ public class Ui {
         printBreakLine();
     }
 
-    private static void printNextOrBack(int pageNo, int maxPages){
-
-    }
-
+    /**
+     * Prints a page of flowers using the class wide flowers list and page no.
+     * @param needsInfo Whether the page needs to show all the info i.e. was the Command an Info Command
+     */
     private void printFlowerList(boolean needsInfo){
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
         for (int i = (lastPageNo-1)*PAGE_SIZE; i < Math.min(lastPageNo*PAGE_SIZE, lastShownList.size()); i++) {
