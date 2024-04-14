@@ -42,4 +42,5 @@ AddFlowerCommand --> Florizz
 deactivate AddFlowerCommand
 
 <--Florizz
+deactivate Florizz
 @enduml

@@ -113,7 +113,7 @@ public class FuzzyLogic {
      * @return The Damerau-Levenshtein distance between the two strings.
      * @throws FlorizzException if the loop tries to access elements beyond the array bounds.
      */
-    private static int computeDLDistance(String item, String userInput) throws FlorizzException {
+    protected static int computeDLDistance(String item, String userInput) throws FlorizzException {
         assert item != null && userInput != null : "Strings cannot be null";
 
         int itemLength = item.length();

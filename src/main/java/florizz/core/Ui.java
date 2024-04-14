@@ -28,6 +28,7 @@ public class Ui {
                 " |_| |_|\\___/|_|  |_/___/___|\n" +
                 "\n";
         System.out.println("Hello from\n" + logo);
+        System.out.println("Type `help`, to view a list of valid commands!");
     }
 
     /**
@@ -158,9 +159,14 @@ public class Ui {
         printBreakLine();
     }
 
+
+    private static void printNextOrBack(int pageNo, int maxPages){
+
+    }
     /**
-     * Prints a page of flowers using the class wide flowers list and page no.
-     * @param needsInfo Whether the page needs to show all the info i.e. was the Command an Info Command
+     * Prints a list of flowers with optional additional information.
+     *
+     * @param needsInfo True if additional information about the flowers is required, false otherwise
      */
     private void printFlowerList(boolean needsInfo){
         int maxPages = (int) Math.ceil((double)lastShownList.size() / PAGE_SIZE);
@@ -223,6 +229,11 @@ public class Ui {
         printFlowerList(true);
     }
 
+    /**
+     * Prints the next page of flower information based on the last command executed.
+     *
+     * @throws FlorizzException If there are no more pages to display or if there is no list of flowers to view.
+     */
     public void printNextPage() throws FlorizzException{
         switch (lastCommand.split(" ")[0]) {
         case ("ALL_FLOWERS"):
@@ -249,6 +260,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints the previous page of flower information based on the last command executed.
+     *
+     * @throws FlorizzException If there are no previous pages to display or if there is no list of flowers to view.
+     */
     public void printBackPage() throws FlorizzException{
         switch (lastCommand.split(" ")[0]) {
         case ("ALL_FLOWERS"):
@@ -274,6 +290,7 @@ public class Ui {
                     "Type 'flowers' to view a list of all flowers.");
         }
     }
+
     /**
      * Prints all possible occasions the user can query
      */
@@ -369,8 +386,8 @@ public class Ui {
     }
 
     /**
-     * ask user for colour input
-     * @param eligibleFlowers list of flowers that are eligible for the occasion
+     * Asks user for colour input
+     * @param eligibleFlowers List of flowers that are eligible for the occasion
      */
     public void printAskColour(ArrayList<Flower> eligibleFlowers) {
         System.out.println("What colour would you like your bouquets to be?");
@@ -391,6 +408,13 @@ public class Ui {
         printBreakLine();
     }
 
+    /**
+     * Prints a prompt asking the user if they would like to save a recommended bouquet to their list.
+     * Prompts the user to input 'yes' to save the bouquet or 'no' to discard it.
+     *
+     * @param recommendedBouquet The recommended bouquet to be saved
+     * @return The user's input ('yes' or 'no')
+     */
     public String printAskSaveBouquet(Bouquet recommendedBouquet) {
         System.out.println("Would you like to save this bouquet to your list?");
         printFullBouquet(recommendedBouquet);
@@ -448,6 +472,15 @@ public class Ui {
             }
         }
     }
+
+    /**
+     * Prints information about the available colors of a flower and prompts the user to choose the color.
+     * Displays information about the flower, including its name and available colors.
+     * Prompts the user to input the desired color or 'cancel' to return to the main menu.
+     *
+     * @param flowers The list of flowers containing the flower with multiple colors
+     * @param flowerName The name of the flower with multiple colors
+     */
     public void printGetFlowerColour(ArrayList<Flower> flowers, String flowerName){
         System.out.println("The flower you're looking for has more than one colour available, " +
                 "each with their own vastly different meanings. Here's some info:");
@@ -455,6 +488,9 @@ public class Ui {
         System.out.println("Type the colour you want to add into the bouquet, or 'cancel' to return to the main menu.");
     }
 
+    /**
+     * Prints a message indicating that the command has been canceled and the user is returning to the main menu.
+     */
     public void printCancelCommand(){
         System.out.println("Canceled command, returning to main menu.");
     }

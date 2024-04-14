@@ -8,6 +8,7 @@ Hello from
  |_| |_|\___/|_|  |_/___/___|
 
 
+Type `help`, to view a list of valid commands!
 What can I do for you?
 Here are the list of commands you can use:
 1. new <bouquetName> - Add a bouquet

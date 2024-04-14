@@ -18,12 +18,30 @@ public class AddFlowerCommand extends Command{
     private String bouquetName;
     private boolean enableUi;
 
+    /**
+     * Constructs a new AddFlowerCommand with the specified parameters.
+     *
+     * @param flowerName The name of the flower to add
+     * @param quantity The quantity of the flower to add
+     * @param bouquetName The name of the bouquet to add the flower to
+     * @param enableUi A boolean indicating whether UI should be enabled
+     */
     public AddFlowerCommand(String flowerName, int quantity, String bouquetName, boolean enableUi) {
         this.flowerName = flowerName;
         this.quantity = quantity;
         this.bouquetName = bouquetName;
         this.enableUi = enableUi;
     }
+
+    /**
+     * Constructs a new AddFlowerCommand with the specified parameters.
+     *
+     * @param flowerName The name of the flower to add
+     * @param colour The color of the flower
+     * @param quantity The quantity of the flower to add
+     * @param bouquetName The name of the bouquet to add the flower to
+     * @param enableUi A boolean indicating whether UI should be enabled
+     */
     public AddFlowerCommand(String flowerName, Flower.Colour colour,
                             int quantity, String bouquetName, boolean enableUi) {
         this.flowerName = flowerName;
@@ -33,6 +51,15 @@ public class AddFlowerCommand extends Command{
         this.enableUi = enableUi;
         this.hasColour = true;
     }
+
+    /**
+     * Executes the AddFlowerCommand by adding flowers to the specified bouquet.
+     *
+     * @param bouquetList The list of bouquets to search for the specified bouquet
+     * @param ui The user interface to interact with the user
+     * @return True if the command is executed successfully, false otherwise
+     * @throws FlorizzException If the specified bouquet is not found or if there is an issue adding the flower
+     */
     @Override
     public boolean execute(ArrayList<Bouquet> bouquetList, Ui ui) throws FlorizzException {
         logger.entering(AddFlowerCommand.class.getName(), "execute");
@@ -63,7 +90,7 @@ public class AddFlowerCommand extends Command{
                 throw new FlorizzException("This flower does not exist in that colour. " +
                         "Type info <flower> to view all available colours for this flower");
             }
-        } else if (matchingFlowers.size()==1){
+        } else if (matchingFlowers.size() == 1){
             flowerToAdd = matchingFlowers.get(0);
             bouquetToAddFlower.addFlower(matchingFlowers.get(0), this.quantity);
             if (enableUi) {
@@ -85,5 +112,4 @@ public class AddFlowerCommand extends Command{
         logger.exiting(AddFlowerCommand.class.getName(), "execute");
         return true;
     }
-
 }

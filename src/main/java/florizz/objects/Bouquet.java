@@ -49,10 +49,10 @@ public class Bouquet {
     }
 
     /**
-     * checks if flower exist in bouquet.
+     * Checks if a flower exists in the bouquet.
      *
-     * @param flowerName
-     * @return boolean true if flower exist
+     * @param flowerName the flower to check for its existence
+     * @return true if the flower exists in the bouquet, false otherwise
      */
     public boolean doesFlowerExist(Flower flowerName) {
         if (flowerHashMap.get(flowerName) == null) {
@@ -62,10 +62,11 @@ public class Bouquet {
     }
 
     /**
-     * add flowers into bouquet
+     * Adds flowers to the bouquet.
      *
-     * @param flowerName
-     * @param quantity
+     * @param flowerName Ihe name of the flower to add
+     * @param quantity Ihe quantity of the flower to add
+     * @throws FlorizzException If the quantity of flowers to add exceeds the maximum allowed value
      */
     public void addFlower(Flower flowerName, Integer quantity) throws FlorizzException {
         if (doesFlowerExist(flowerName)) {
@@ -80,6 +81,14 @@ public class Bouquet {
         }
     }
 
+    /**
+     * Removes flowers from the bouquet.
+     *
+     * @param flowerName The name of the flower to remove
+     * @param quantity The quantity of the flower to remove
+     * @return True if the flower was successfully removed, false otherwise
+     * @throws FlorizzException If the specified quantity is <= 0 or if it exceeds the current quantity of flowers
+     */
     public boolean removeFlower(Flower flowerName, Integer quantity) throws FlorizzException {
         // if flower already in bouquet
         if (doesFlowerExist(flowerName)) {

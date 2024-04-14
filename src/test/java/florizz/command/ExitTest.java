@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ExitTest {
     @Test
@@ -15,6 +15,6 @@ public class ExitTest {
         ArrayList<Bouquet> tempBouquetList = new ArrayList<>();
         Ui ui = new Ui();
         ExitCommand exitCommand = new ExitCommand();
-        assertEquals(false, exitCommand.execute(tempBouquetList, ui));
+        assertFalse(exitCommand.execute(tempBouquetList, ui));
     }
 }

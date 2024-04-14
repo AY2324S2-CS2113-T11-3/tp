@@ -48,4 +48,5 @@ InfoCommand --> Florizz
 deactivate InfoCommand
 
 <--Florizz
+deactivate Florizz
 @enduml

@@ -63,5 +63,5 @@ flowers to put into a bouquet for various occasions.
   should do so at their own risk
 
   * **DG**:
-  ![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/Ijaaz-UML.png)
+  ![Add Flower Command Diagram](/docs/UML-diagrams/Ijaaz/(old)Ijaaz-UML.png)
   
